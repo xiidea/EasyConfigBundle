@@ -1,0 +1,32 @@
+{
+    "name": "xiidea/easy-config",
+    "type": "symfony-bundle",
+    "description":  "Symfony Config Bundle",
+    "keywords": ["config", "configuration", "settings", "settings-bundle"],
+    "homepage": "https://www.bracits.com",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Xiidea\\EasyConfigBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Xiidea\\EasyConfigBundle\\Tests\\": "/Tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Xiidea Team"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=8.0",
+        "symfony/framework-bundle": "6.3.x-dev",
+        "symfony/twig-bundle": "6.3.x-dev"
+    }
+}

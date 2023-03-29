@@ -1,0 +1,71 @@
+{% include '@XiideaEasyConfig/default/base.html.twig' %}
+
+{% block content %}
+    <div class="card card-custom" data-card="true">
+        <div class="card-body">
+            {% for index, item in forms %}
+                {{ form_start(item.form, {'method': 'POST', 'action': path('xiidea_easy_config_form_save_user', {key : item.key}), 'attr': {'id': 'config-form-' ~ index, 'novalidate': 'novalidate', 'class' : 'config-form jq-validate'}}) }}
+                <div class="card card-custom gutter-b" data-card="true">
+                    <div class="card-header justify-content-center">
+                        <div class="card-title">
+                                <span class="card-icon">
+                                    <i class="flaticon2-gear"></i>
+                                </span>
+
+                            <h3 class="card-label">{{ item.label }}</h3>
+
+                        </div>
+                        <div class="card-toolbar">
+                            <a href="#" class="btn btn-icon btn-sm btn-hover-light-primary mr-1" data-card-tool="toggle"
+                               data-toggle="tooltip" data-placement="top" title="Toggle Configurations">
+                                <i class="ki ki-arrow-down icon-nm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <span class="group-key" data-groupkey="{{ item.key }}"></span>
+
+                        {% set isClosedPrevDiv = 0 %}
+                        {% for field in item.form %}
+
+                            {% if isClosedPrevDiv == 1 and "Preference" not in field.vars.name %}
+                                </div>
+                                <div class="form-group row">
+                                    {% if 'token' not in form_label(field) %}
+                                        {{ form_label(field) }}
+                                    {% endif %}
+                            {% endif %}
+
+                            {% if isClosedPrevDiv == 0 %}
+                                {% set isClosedPrevDiv = 1 %}
+                                <div class="form-group row">
+                                    {% if 'token' not in form_label(field) %}
+                                        {{ form_label(field) }}
+                                    {% endif %}
+                            {% endif %}
+
+                                    {% if "Preference" in field.vars.name %}
+                                        {{ form_widget(field, { 'attr': { 'class': field.vars.attr.class|default('') ~ ' derived-from-global' } }) }}
+                                    {% else %}
+                                        {{ form_widget(field) }}
+                                    {% endif %}
+                                    {#{{ form_help(field) }}#}
+
+                            {% if "Preference" in field.vars.name or loop.last %}
+                                    {% set isClosedPrevDiv = 0 %}
+                                    </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+{#                    {% if item.isEditable == true %}#}
+                        <div class="card-footer d-flex justify-content-center">
+                            <button id="btnSubmit" class="btn btn-primary">Save</button>
+                        </div>
+{#                    {% endif %}#}
+                </div>
+                {{ form_end(item.form) }}
+                <span class="value-retrieving-url" data-url="{{ path('xiidea_easy_config_by_key') }}"></span>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+services:
+
+  xiidea.easy_config.service_repository:
+          class: Xiidea\EasyConfigBundle\Services\Repository\ConfigRepository
+          arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%xiidea.easy_config.config_class%'
+
+  xiidea.easy_config.service_manager:
+          class: Xiidea\EasyConfigBundle\Services\Manager\ConfigManager
+          tags:
+            - { name: config.processor }
+          arguments:
+            - '@xiidea.easy_config.service_repository'
+            - '@form.factory'
+            - '@security.token_storage'
+
+  xiidea.easy_config.controller_api:
+          class: Xiidea\EasyConfigBundle\Controller\ConfigApiController
+          arguments:
+            - '@xiidea.easy_config.service_manager'
+          tags:
+            - { name: controller.service_arguments }
+
+  xiidea.easy_config.controller_crud:
+          class: Xiidea\EasyConfigBundle\Controller\ConfigCrudController
+          arguments:
+            - '@xiidea.easy_config.service_manager'
+            - '@form.factory'
+          tags:
+            - { name: controller.service_arguments }
+          public: true,
+          calls:
+            - [ setContainer, [ '@service_container' ] ]
+
+  Xiidea\EasyConfigBundle\Twig\BaseTemplateExtension:
+          arguments:
+            - '%xiidea.easy_config.base_template%'
+          tags:
+            - { name: twig.extension }
+          public: true

@@ -1,0 +1,5 @@
+###> symfony/EasyConfig-bundle ###
+/vendor/
+/composer.lock
+/.idea
+/.vscode

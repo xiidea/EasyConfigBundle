@@ -1,0 +1,7 @@
+{% set baseTemplate = baseTemplate() %}
+
+{% if baseTemplate == '' or baseTemplate == null %}
+    {% set baseTemplate = '@XiideaEasyConfig/default/layout.html.twig' %}
+{% endif %}
+
+{% extends baseTemplate %}

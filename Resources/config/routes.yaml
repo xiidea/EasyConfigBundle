@@ -1,0 +1,44 @@
+xiidea_easy_config_index:
+        path: /
+        methods: GET
+        defaults: { _controller: xiidea.easy_config.controller_crud::index }
+
+xiidea_easy_config_list:
+        path: /list
+        methods: GET
+        defaults: { _controller: xiidea.easy_config.controller_crud::list }
+
+xiidea_easy_config_form:
+        path: /form/{key}
+        methods: GET
+        defaults: { _controller: xiidea.easy_config.controller_crud::form }
+
+xiidea_easy_config_form_user:
+        path: /user-form/{key}
+        methods: GET
+        defaults: { _controller: xiidea.easy_config.controller_crud::userForm }
+
+xiidea_easy_config_form_save:
+        path: /save/{key}
+        methods: POST
+        defaults: { _controller: xiidea.easy_config.controller_crud::save }
+
+xiidea_easy_config_form_save_user:
+        path: /user/save/{key}
+        methods: POST
+        defaults: { _controller: xiidea.easy_config.controller_crud::saveUserConfig }
+
+xiidea_easy_config_value_by_key:
+        path: /value/by-key
+        methods: GET
+        defaults: { _controller: xiidea.easy_config.controller_crud::getValueByKey }
+
+xiidea_easy_config_by_group:
+        path: /group/{key}.json
+        methods: GET
+        defaults: { _controller: xiidea.easy_config.controller_api::getByGroup }
+
+xiidea_easy_config_by_key:
+        path: /value/by-key
+        methods: GET
+        defaults: { _controller: xiidea.easy_config.controller_api::getByKey }
