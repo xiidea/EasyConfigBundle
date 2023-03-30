@@ -1,0 +1,22 @@
+{% include '@XiideaEasyConfig/layout.html.twig' %}
+
+<div class="card card-custom" data-card="true">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tbody>
+                {% for groupKey, configuration in configurationGroup %}
+                    <tr>
+                        <td>{{ configuration.label }}</td>
+                        <td>
+                            <a class="btn btn-primary"
+                               href="{{ path(configuration.routeName, {'key': groupKey}) }}">
+                                {% if is_granted(configuration.authorSecurityLevels) %} Edit{% else %}View{% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -31,7 +31,7 @@ class ConfigCrudController extends AbstractController
             'forms' => $this->manager->getConfigurationGroupForms(),
         ];
 
-        return $this->render("@XiideaEasyConfig/default/index.html.twig", $contents);
+        return $this->render("@XiideaEasyConfig/index.html.twig", $contents);
     }
 
     /**
@@ -44,7 +44,7 @@ class ConfigCrudController extends AbstractController
             'configurationGroup' => $this->manager->getConfigurationGroups(),
         ];
 
-        return $this->render("@XiideaEasyConfig/default/list.html.twig", $contents);
+        return $this->render("@XiideaEasyConfig/list.html.twig", $contents);
     }
 
     /**
@@ -57,7 +57,7 @@ class ConfigCrudController extends AbstractController
         $configurationGroupData = $this->manager->getConfigurationsByGroupKey($key);
         $form = $configurationGroup->getForm($this->formFactory, $configurationGroupData);
 
-        return $this->render('@XiideaEasyConfig/default/index.html.twig', [
+        return $this->render('@XiideaEasyConfig/index.html.twig', [
             'contentHead' => $configurationGroup::getLabel(),
             'forms' => [
                 [
@@ -105,7 +105,7 @@ class ConfigCrudController extends AbstractController
         $configurationGroupData = $this->manager->getUserConfigurationValuesByGroupKey($key);
         $form = $configurationGroup->getForm($this->formFactory, $configurationGroupData);
 
-        return $this->render('@XiideaEasyConfig/default/user.html.twig', [
+        return $this->render('@XiideaEasyConfig/user.html.twig', [
             'contentHead' => $configurationGroup::getLabel(),
             'forms' => [
                 [

@@ -32,10 +32,3 @@ services:
           public: true,
           calls:
             - [ setContainer, [ '@service_container' ] ]
-
-  Xiidea\EasyConfigBundle\Twig\BaseTemplateExtension:
-          arguments:
-            - '%xiidea.easy_config.base_template%'
-          tags:
-            - { name: twig.extension }
-          public: true

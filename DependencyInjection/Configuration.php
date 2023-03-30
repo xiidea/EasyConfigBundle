@@ -15,7 +15,6 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $this->addRequiredConfigs($rootNode);
-        $this->addOptionalConfigs($rootNode);
 
         return $treeBuilder;
     }
@@ -28,16 +27,6 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeOverwritten()
                     ->isRequired()
                     ->cannotBeEmpty()
-                ->end()
-            ->end();
-    }
-
-    private function addOptionalConfigs(ArrayNodeDefinition $rootNode)
-    {
-        $rootNode
-            ->children()
-                ->variableNode('base_template')
-                    ->defaultValue('')
                 ->end()
             ->end();
     }
