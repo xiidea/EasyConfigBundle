@@ -1,10 +1,25 @@
 {
     "name": "xiidea/easy-config",
     "type": "symfony-bundle",
-    "description":  "Symfony Config Bundle",
+    "description":  "A Symfony Bundle for easy configuration management",
     "keywords": ["config", "configuration", "settings", "settings-bundle"],
-    "homepage": "https://www.bracits.com",
+    "homepage": "https://github.com/xiidea/EasyConfigBundle",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Mamun Ahmed",
+            "email": "maamun7@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "EasyConfigBundle Community",
+            "homepage": "https://github.com/xiidea/EasyConfigBundle/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/xiidea/EasyConfigBundle/issues",
+        "source": "https://github.com/xiidea/EasyConfigBundle"
+    },
     "autoload": {
         "psr-4": {
             "Xiidea\\EasyConfigBundle\\": ""
@@ -18,11 +33,6 @@
             "Xiidea\\EasyConfigBundle\\Tests\\": "/Tests/"
         }
     },
-    "authors": [
-        {
-            "name": "Xiidea Team"
-        }
-    ],
     "minimum-stability": "dev",
     "require": {
         "php": ">=8.0",
