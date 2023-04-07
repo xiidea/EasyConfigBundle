@@ -1,6 +1,6 @@
-{% include '@XiideaEasyConfig/layout.html.twig' %}
+{% extends '@XiideaEasyConfig/layout.html.twig' %}
 
-{% block content %}
+{% block xiidea_config_content %}
     <div class="card card-custom" data-card="true">
         <div class="card-body">
             {% for index, item in forms %}
@@ -63,4 +63,4 @@
             {% endfor %}
         </div>
     </div>
-{% endblock %}
+{% endblock xiidea_config_content %}

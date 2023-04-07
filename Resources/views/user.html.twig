@@ -1,6 +1,6 @@
-{% include '@XiideaEasyConfig/layout.html.twig' %}
+{% extends '@XiideaEasyConfig/layout.html.twig' %}
 
-{% block content %}
+{% block xiidea_config_content %}
     <div class="card card-custom" data-card="true">
         <div class="card-body">
             {% for index, item in forms %}
@@ -57,15 +57,20 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-{#                    {% if item.isEditable == true %}#}
+                    {% if item.isEditable == true %}
                         <div class="card-footer d-flex justify-content-center">
                             <button id="btnSubmit" class="btn btn-primary">Save</button>
                         </div>
-{#                    {% endif %}#}
+                    {% endif %}
                 </div>
                 {{ form_end(item.form) }}
                 <span class="value-retrieving-url" data-url="{{ path('xiidea_easy_config_by_key') }}"></span>
             {% endfor %}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="application/javascript" src="{{ asset('bundles/xiideaeasyconfig/js/easyconfig.js') }}"></script>
+    {{ parent() }}
 {% endblock %}
