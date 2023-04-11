@@ -1,4 +1,5 @@
-# Easy Config Bundle
+Easy Config Bundle
+==================
 ### A Symfony Bundle for easy configuration management.
 
 ## Features Include
@@ -8,7 +9,7 @@
 * Get configuration through rest API
 
 ## Install
-1. Install this bundle by using composer
+1. Download EasyConfigBundle using composer
 2. Enable the bundle
 3. Register an Interface to Kernel file
 4. Create Config entity class
@@ -17,7 +18,7 @@
 7. Register the bundle’s routes
 8. Create your first form
 
-### 1. Install this bundle by using composer :
+### 1. Download EasyConfigBundle using composer :
 Open a command console, enter project directory and execute the following command to download the latest stable version of this bundle:
 ```bash
 $ composer require xiidea/easy-config-bundle
@@ -75,8 +76,6 @@ $ php bin/console doctrine:schema:update --force
 ### 7. Register the bundle’s routes:
 Now it's time to access the form you have just created, for that you have to include bundle's routes to your application by the following way.
 ```yaml
-// config/routes.yaml
-// ...
 xiidea_config_route:
     resource: "@XiideaEasyConfigBundle/Resources/config/routes.yaml"
     prefix: '/config'
