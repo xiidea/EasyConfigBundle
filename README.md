@@ -14,9 +14,11 @@ Easy Config Bundle
 3. Register an Interface to Kernel file
 4. Create Config entity class
 5. Configure yaml file
-6. Update database schema
-7. Register the bundle’s routes
-8. Create your first form
+6. Update database schema 
+7. Create your first form 
+8. Register the bundle’s routes
+9. Overriding default EasyConfigBundle templates (optional)
+
 
 ### 1. Download EasyConfigBundle using composer :
 Open a command console, enter project directory and execute the following command to download the latest stable version of this bundle:
@@ -60,12 +62,12 @@ By default `XiideaEasyConfigBundle` supports Doctrine ORM. However, you must pro
 
 ### 5. Configure yaml file:
 Create a file in the following directory `config/packages` with the exact name `xiidea_easy_config.yaml`
-A sample config file is available in this path `Resources/config/config-sample.yml`. Copy this sample file's content and paste to just created file. Do not forget to change your Entity class name.
+A sample config file is available in this path `Resources/config/config-sample.yml`. Copy this sample file's content and paste to just created file. Do not forget to change your Entity class name which has been mentioned in [Step 4](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/config-entity.md).
 ```yaml
 # Xiidea Easy Config Configuration Sample
 
 xiidea_easy_config:
-    config_class: App\Entity\System\Configuration
+    config_class: App\Entity\Configuration
 ```
 ### 6. Update database schema:
 It’s time to set up the database schema, open your command console, go to your project root path and execute the following command.
@@ -73,7 +75,10 @@ It’s time to set up the database schema, open your command console, go to your
 ```bash
 $ php bin/console doctrine:schema:update --force
 ```
-### 7. Register the bundle’s routes:
+### 7. Create your first form:
+Create a form class and form type with your preferred fields. Please follow the [instructions](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/create-form.md) to create the form and form type.
+
+### 8. Register the bundle’s routes:
 Now it's time to access the form you have just created, for that you have to include bundle's routes to your application by the following way.
 ```yaml
 xiidea_config_route:
@@ -86,8 +91,8 @@ _Note: You may change the prefix as your wish_
 * Index route `(prefix/)` : List of all forms
 * Form group route `(prefix/group_key)` : Form of specific group key
 
-### 8. Create your first form:
-Create a form class and form type with your preferred fields. Please follow the [instructions](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/create-form.md) to create the form and form type.
+### 9. Overriding default EasyConfigBundle templates (optional)
+Template overriding is not important to use **EasyConfigBundle** bundle but if you want to keep UI as similar as your application you can override the template, to do so follow the [instructions](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/overriding_templates.md) 
 
 **Congratulations !**
 

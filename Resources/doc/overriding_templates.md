@@ -1,5 +1,5 @@
-Overriding Default EasyConfigBundle Templates
-=============================================
+# Step 9: Overriding default EasyConfigBundle templates (optional)
+==================================================================
 As you start to incorporate **EasyConfigBundle** into your application, you may need to override the default templates that are provided by the bundle. Although the template names are not configurable, Symfony provides a built-in way to [override the templates themselves](https://symfony.com/doc/current/bundles/override.html).
 
 Example: Overriding The Default layout.html.twig

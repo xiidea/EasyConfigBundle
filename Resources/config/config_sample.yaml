@@ -1,4 +1,4 @@
 # Xiidea Easy Config Configuration Sample
 
 xiidea_easy_config:
-    config_class: App\Entity\System\Configuration
+    config_class: App\Entity\Configuration
