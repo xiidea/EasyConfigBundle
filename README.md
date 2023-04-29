@@ -27,7 +27,7 @@ $ composer require xiidea/easy-config-bundle
 ```
 
 ### 2. Enable the Bundle:
-The bundle should be automatically enabled by Symfony Flex. If you don't use [Flex](https://symfony.com/doc/current/setup/flex.html), you'll need to manually enable the bundle by adding the following line in the config/bundles.php file of your project:
+The bundle should be automatically enabled by Symfony Flex. If you don't use [Flex](https://symfony.com/doc/current/setup/flex.html), you will need to enable the bundle manually by adding the following line in the config/bundles.php file of your project:
 
 ```php
 <?php
@@ -58,7 +58,7 @@ _Note: Do not forget to include the below line above in your src/Kernel.php_
 `use Xiidea\EasyConfigBundle\Services\FormGroup\ConfigGroupInterface;`
 
 ### 4. Create Config entity class:
-By default `XiideaEasyConfigBundle` supports Doctrine ORM. However, you must provide an Entity class and the class has to extend the class  `\Xiidea\EasyConfigBundle\Model\BaseConfig`. To configure the Entity class properly please follow the detailed [instructions](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/config-entity.md).
+By default `EasyConfigBundle` supports Doctrine ORM. However, you must provide an Entity class and the class has to extend the class  `\Xiidea\EasyConfigBundle\Model\BaseConfig`. To configure the Entity class properly please follow the detailed [instructions](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/config-entity.md).
 
 ### 5. Configure yaml file:
 Create a file in the following directory `config/packages` with the exact name `xiidea_easy_config.yaml`
