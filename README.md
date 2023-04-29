@@ -75,8 +75,8 @@ It’s time to set up the database schema, open your command console, go to your
 ```bash
 $ php bin/console doctrine:schema:update --force
 ```
-### 7. Create your first form:
-Create a form class and form type with your preferred fields. Please follow the [instructions](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/create-form.md) to create the form and form type.
+### 7. Create form group and type:
+Create a form group class and form type with your necessary fields. Please follow the [instructions](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/form-group-and-type.md) to create the form group and type.
 
 ### 8. Register the bundle’s routes:
 Now it's time to access the form you have just created, for that you have to include bundle's routes to your application by the following way.
