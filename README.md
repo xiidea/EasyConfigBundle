@@ -61,7 +61,7 @@ By default `EasyConfigBundle` supports Doctrine ORM. However, you must provide a
 
 ### 4. Configure yaml file:
 Create a file in the following directory `config/packages` with the exact name `xiidea_easy_config.yaml`
-A sample config file is available in this path `Resources/config/config-sample.yml`. Copy this sample file's content and paste to just created file. Do not forget to change your Entity class name which has been mentioned in [Step 4](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/config-entity.md).
+A sample config file is available in this path `Resources/config/config-sample.yml`. Copy this sample file's content and paste to just created file. Do not forget to change your Entity class name which has been mentioned in [Step 3](https://github.com/xiidea/EasyConfigBundle/blob/main/Resources/doc/config-entity.md).
 ```yaml
 # Xiidea Easy Config Configuration Sample
 
