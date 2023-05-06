@@ -1,4 +1,4 @@
-# Step 7: Create Form group and type
+# Step 6: Create Form group and type
 ### Create form group:
 You can create this form group class under the service directory, in below example, a form group class has been created with the name `MasterDataConfigurationGroup` under the following `Service/Configuration/Group` directory. It is important that, this group class has to implement the base group class `BaseConfigurationGroup` which is being provided by the `EasyConfigBundle`.
 

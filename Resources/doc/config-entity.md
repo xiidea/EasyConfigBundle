@@ -1,4 +1,4 @@
-# Step 4: Create Config entity class
+# Step 3: Create Config entity class
 The BaseConfig class does not include ORM Mapping by default, so it is necessary to create your own mappings by extending the BaseConfig model provided by the bundle and configuring it accordingly.
 
 For example:
