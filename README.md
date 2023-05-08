@@ -23,7 +23,7 @@ Easy Config Bundle
 ##### _Download through composer :_
 Open a command console, enter project directory and execute the following command to download the latest stable version of this bundle:
 ```bash
-$ composer require xiidea/easy-config-bundle
+$ composer require xiidea/easy-config
 ```
 ##### _Enable Bundle (No need when [Flex](https://symfony.com/doc/current/setup/flex.html) is available):_
 The bundle should be automatically enabled by Symfony [Flex](https://symfony.com/doc/current/setup/flex.html). If you don't use [Flex](https://symfony.com/doc/current/setup/flex.html), you will need to enable the bundle manually by adding the following line in the config/bundles.php file of your project:
