@@ -10,7 +10,7 @@ For example:
 namespace App\Service\Configuration\Group;
 
 use App\Form\Config\MasterDataConfigurationType;
-use App\Service\System\Configuration\BaseConfigurationGroup;
+use Xiidea\EasyConfigBundle\Services\FormGroup\BaseConfigGroup;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
