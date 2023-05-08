@@ -11,20 +11,20 @@ class BaseConfig implements BaseConfigInterface
 
     private $value;
 
-    private $locked;
+    private bool $locked = false;
 
     /**
      * @var string
      */
     private $type;
 
-    private $frontend = false;
+    private bool $frontend = false;
 
     private $module;
 
     private $label;
 
-    private $isGlobal;
+    private $isGlobal = true;
 
     public function __construct(string $id)
     {
@@ -40,11 +40,13 @@ class BaseConfig implements BaseConfigInterface
     }
 
     /**
-     * @param mixed $id
+     * @param  mixed  $id
      */
-    public function setId($id): void
+    public function setId($id): self
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -63,9 +65,9 @@ class BaseConfig implements BaseConfigInterface
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getLocked()
+    public function getLocked(): bool
     {
         return $this->locked;
     }
@@ -98,56 +100,58 @@ class BaseConfig implements BaseConfigInterface
     }
 
     /**
-     * @param bool $frontend
+     * @param  bool  $frontend
      */
-    public function setFrontend(bool $frontend): void
+    public function setFrontend(bool $frontend): self
     {
         $this->frontend = $frontend;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getModule()
+    public function getModule(): ?string
     {
         return $this->module;
     }
 
     /**
-     * @param mixed $module
+     * @param  mixed  $module
      */
-    public function setModule($module): void
+    public function setModule(?string $module): self
     {
         $this->module = $module;
+
+        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getLabel()
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
     /**
-     * @param mixed $label
+     * @param  mixed  $label
      */
-    public function setLabel($label): void
+    public function setLabel(?string $label): void
     {
         $this->label = $label;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getIsGlobal()
+    public function getIsGlobal(): bool
     {
         return $this->isGlobal;
     }
 
-    /**
-     * @param mixed $isGlobal
-     */
+
     public function setIsGlobal(bool $isGlobal): self
     {
         $this->isGlobal = $isGlobal;
