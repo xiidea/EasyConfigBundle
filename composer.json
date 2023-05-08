@@ -23,17 +23,13 @@
     "autoload": {
         "psr-4": {
             "Xiidea\\EasyConfigBundle\\": ""
-        },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Xiidea\\EasyConfigBundle\\Tests\\": "/Tests/"
         }
     },
-    "minimum-stability": "dev",
+    "autoload-dev": {
+        "psr-4": { "Xiidea\\EasyConfigBundle\\Tests\\": "Tests/" }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "require": {
         "php": ">=8.0",
         "symfony/framework-bundle": ">=5.4",
