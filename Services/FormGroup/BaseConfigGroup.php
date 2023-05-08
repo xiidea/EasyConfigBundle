@@ -31,6 +31,7 @@ abstract class BaseConfigGroup implements ConfigGroupInterface
     {
         return null;
     }
+
     public static function getRouteName(): ?string
     {
         return 'xiidea_easy_config_form';
@@ -39,5 +40,25 @@ abstract class BaseConfigGroup implements ConfigGroupInterface
     public function getName(): ?string
     {
         return 'name';
+    }
+
+    public static function getGroupKey(): ?string
+    {
+        return 'miscellaneous';
+    }
+
+    public static function getGroupLabel(): ?string
+    {
+        return StringUtil::humanize(static::getGroupKey());
+    }
+
+    public static function getGroupIcon(): ?string
+    {
+        return 'mirror.svg';
+    }
+
+    public static function getPriority(): int
+    {
+        return 0;
     }
 }
