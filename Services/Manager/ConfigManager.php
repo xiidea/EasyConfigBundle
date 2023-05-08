@@ -213,9 +213,6 @@ class ConfigManager
         $configurations = $this->repository->getConfigurationByUsernameAndGroup($username, $groupKey);
         $values = [];
 
-        /**
-         * @var \App\Entity\System\Configuration $configuration
-         */
         foreach ($configurations as $configuration) {
             $key = str_replace("{$username}.", '', $configuration->getId());
             $key = str_replace("{$groupKey}.", '', $key);
@@ -300,5 +297,19 @@ class ConfigManager
         }
 
         return $this->typeCast($value, $type);
+    }
+
+    public function getFrontendConfigValuesByGroup($group): array
+    {
+        $items = $this->repository->loadAllByGroup($group, true, true);
+        $userItems = $this->repository->loadAllByGroup($this->concatUsernameWithKey($group), true, true);
+        foreach ($userItems as $key => $item) {
+            if ('DEFAULT' === $item) {
+                continue;
+            }
+            $items[$key] = $item;
+        }
+
+        return $items;
     }
 }

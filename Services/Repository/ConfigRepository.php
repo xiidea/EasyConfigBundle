@@ -43,14 +43,14 @@ class ConfigRepository implements ConfigRepositoryInterface
             ->setCacheable(true)
             ->setCacheRegion('config_group')
             ->where($qb->expr()->like('c.id', ':username'))
-            ->setParameter('username', $username . '.' . $groupKey . '.%')
+            ->setParameter('username', $username.'.'.$groupKey.'.%')
             ->orWhere(
                 $qb->expr()->andX(
                     $qb->expr()->like('c.id', ':groupKey'),
                     $qb->expr()->eq('c.isGlobal', ':isGlobal')
                 )
             )
-            ->setParameter('groupKey', $groupKey . '.%')
+            ->setParameter('groupKey', $groupKey.'.%')
             ->setParameter('isGlobal', 1)
             ->getQuery()
             ->getResult();
@@ -64,7 +64,7 @@ class ConfigRepository implements ConfigRepositoryInterface
             ->setCacheable(true)
             ->setCacheRegion('config_key')
             ->where('c.id=:username')
-            ->setParameter('username', $username . '.' . $key)
+            ->setParameter('username', $username.'.'.$key)
             ->orWhere('c.id=:key')
             ->setParameter('key', $key)
             ->getQuery()
@@ -76,36 +76,48 @@ class ConfigRepository implements ConfigRepositoryInterface
         return $this->repository->createQueryBuilder($alias);
     }
 
-    public function loadAllByGroup($groupKey)
+    public function loadAllByGroup($groupKey, $valueOnly = false, $frontendOnly = false): array
     {
-        $qb = $this->createQueryBuilder('p');
+        $qb = $this->createQueryBuilder('c');
 
-        $configurations = $qb
-            ->where($qb->expr()->like('p.id', ':group_key'))
+        $qb = $qb
+            ->where($qb->expr()->like('c.id', ':group_key'))
             ->setCacheable(true)
-            ->setCacheRegion('config_group')
-            ->setParameter('group_key', $groupKey . '.%')
-            ->getQuery()
-            ->getResult();
+            ->setCacheRegion('master_entity_region')
+            ->setParameter('group_key', $groupKey.'.%');
 
-        if (!$configurations) {
-            return null;
+        if ($frontendOnly) {
+            $qb
+                ->andWhere($qb->expr()->eq('c.frontend', ':is_frontend'))
+                ->setParameter('is_frontend', true);
         }
 
+        $configurations = $qb->getQuery()->getResult();
+
+        if (!$configurations) {
+            return [];
+        }
+
+        return $this->getNormalizedArray($groupKey, $configurations, $valueOnly);
+    }
+
+    private function getNormalizedArray($groupKey, $configurations, $valueOnly): array
+    {
         $keyLength = strlen($groupKey) + 1;
         $return = [];
 
-        /** @var BaseConfig $configuration */
         foreach ($configurations as $configuration) {
-            $return[substr($configuration->getId(), $keyLength)] = $configuration;
+            $return[substr($configuration->getId(), $keyLength)] = $valueOnly ? $configuration->getAs(
+            ) : $configuration;
         }
 
         return $return;
     }
 
+
     public function getValuesByGroupKey($configurationGroup)
     {
-        return array_map([$this, 'getValue'], (array) $this->loadAllByGroup($configurationGroup));
+        return array_map([$this, 'getValue'], (array)$this->loadAllByGroup($configurationGroup));
     }
 
     protected function getValue($configuration)
@@ -116,7 +128,7 @@ class ConfigRepository implements ConfigRepositoryInterface
     public function saveMultiple($baseKey, array $values = [], array $types = [])
     {
         foreach ($values as $key => $value) {
-            $this->save($baseKey . ".{$key}", $value, isset($types[$key]) ?? $types[$key], false, false, false);
+            $this->save($baseKey.".{$key}", $value, isset($types[$key]) ?? $types[$key], false, false, false);
         }
 
         $this->em->flush();
@@ -126,9 +138,9 @@ class ConfigRepository implements ConfigRepositoryInterface
      * @param $key
      * @param $value
      * @param $type
-     * @param bool $locked
-     * @param bool $force
-     * @param bool $flush
+     * @param  bool  $locked
+     * @param  bool  $force
+     * @param  bool  $flush
      * @return BaseConfig
      */
     public function save($key, $value, $type = null, bool $locked = false, bool $force = false, bool $flush = true)
@@ -143,7 +155,7 @@ class ConfigRepository implements ConfigRepositoryInterface
 
         $configuration->setValue($value);
         $configuration->setType($type);
-        $configuration->setLocked((bool) $locked);
+        $configuration->setLocked((bool)$locked);
 
         $this->em->persist($configuration);
 
