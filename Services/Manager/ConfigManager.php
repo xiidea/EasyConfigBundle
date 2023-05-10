@@ -260,6 +260,10 @@ class ConfigManager
 
     private function getUsername(): ?string
     {
+        if (null == $this->tokenStorage->getToken()) {
+            return '';
+        }
+
         return $this->tokenStorage->getToken()->getUser()->getUsername();
     }
 
