@@ -12,10 +12,7 @@ class BaseConfig implements BaseConfigInterface
     private $value;
 
     private bool $locked = false;
-
-    /**
-     * @var string
-     */
+    
     private $type;
 
     private bool $frontend = false;
@@ -40,7 +37,7 @@ class BaseConfig implements BaseConfigInterface
     }
 
     /**
-     * @param  mixed  $id
+     * @param  string  $id
      */
     public function setId($id): self
     {
@@ -49,10 +46,8 @@ class BaseConfig implements BaseConfigInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+
+    public function getValue(): mixed
     {
         return $this->value;
     }
@@ -64,9 +59,7 @@ class BaseConfig implements BaseConfigInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
+
     public function getLocked(): bool
     {
         return $this->locked;
@@ -91,17 +84,13 @@ class BaseConfig implements BaseConfigInterface
         return $this;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isFrontend(): bool
     {
         return $this->frontend;
     }
 
-    /**
-     * @param  bool  $frontend
-     */
+
     public function setFrontend(bool $frontend): self
     {
         $this->frontend = $frontend;
@@ -109,9 +98,7 @@ class BaseConfig implements BaseConfigInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getModule(): ?string
     {
         return $this->module;
@@ -135,17 +122,15 @@ class BaseConfig implements BaseConfigInterface
         return $this->label;
     }
 
-    /**
-     * @param  mixed  $label
-     */
-    public function setLabel(?string $label): void
+
+    public function setLabel(?string $label): self
     {
         $this->label = $label;
+
+        return $this;
     }
 
-    /**
-     * @return bool
-     */
+
     public function getIsGlobal(): bool
     {
         return $this->isGlobal;
