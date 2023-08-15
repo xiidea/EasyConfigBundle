@@ -13,13 +13,8 @@ class StringUtilTest extends TestCase
         $label = StringUtil::getLabelFromClass('App\\Entities\\UserEntity');
         $this->assertEquals('User entity', $label);
 
-        $labelFromObject = StringUtil::getLabelFromClass(
-            new BaseConfig('config.test.item')
-    );
-        $this->assertEquals(
-            'Base config',
-            $labelFromObject
-        );  // This might change based on your PHP version
+        $labelFromObject = StringUtil::getLabelFromClass(new BaseConfig('config.test.item'));
+        $this->assertEquals('Base config', $labelFromObject);
     }
 
     public function testHumanize()
@@ -32,6 +27,9 @@ class StringUtilTest extends TestCase
 
         $textReplace = StringUtil::humanize('dont');
         $this->assertEquals("don't", $textReplace);
+
+        $textReplace = StringUtil::humanize('this_is_new');
+        $this->assertEquals("this is new", $textReplace);
     }
 
     public function testGetClassBaseName()
