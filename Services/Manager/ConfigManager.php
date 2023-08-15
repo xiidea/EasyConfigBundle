@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Xiidea\EasyConfigBundle\Model\BaseConfig;
 use Xiidea\EasyConfigBundle\Services\FormGroup\ConfigGroupInterface;
 use Xiidea\EasyConfigBundle\Services\Repository\ConfigRepositoryInterface;
@@ -21,15 +22,18 @@ class ConfigManager
     private FormFactoryInterface $formFactory;
     private TokenStorageInterface $tokenStorage;
     protected $container;
+    private AuthorizationCheckerInterface $checker;
 
     public function __construct(
         ConfigRepositoryInterface $repository,
         FormFactoryInterface $formFactory,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        AuthorizationCheckerInterface $checker
     ) {
         $this->repository = $repository;
         $this->formFactory = $formFactory;
         $this->tokenStorage = $tokenStorage;
+        $this->checker = $checker;
     }
 
     public function addConfigGroup($group)
@@ -61,7 +65,7 @@ class ConfigManager
                 'key' => $groupKey,
                 'label' => $policyGroup::getLabel(),
                 'form' => $this->createFormView($policyGroup, $groupKey),
-                'isEditable' => true // $this->checker->isGranted($policyGroup::getAuthorSecurityLevels()),
+                'isEditable' => $this->checker->isGranted($policyGroup::getAuthorSecurityLevels()),
             ];
         }
 
@@ -204,7 +208,7 @@ class ConfigManager
 
     public function getConfigurationGroupLabel($group): string
     {
-        return $this->configurationGroups[$group]::getLabel();
+        return $this->configurationGroups[$group]->getLabel();
     }
 
     public function getUserConfigurationValuesByGroupKey($groupKey): array
