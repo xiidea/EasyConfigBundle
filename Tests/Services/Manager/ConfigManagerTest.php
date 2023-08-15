@@ -81,4 +81,93 @@ class ConfigManagerTest extends TestCase
 
         $this->assertEquals($expectedValue, $result);
     }
+
+    public function testConcatUsernameWithKey()
+    {
+        $tokenMock = $this->createMock(TokenInterface::class);
+        $userMock = $this->createMock(UserInterface::class);
+
+        $username = 'testuser';
+        $userMock->method('getUserIdentifier')->willReturn($username);
+        $tokenMock->method('getUser')->willReturn($userMock);
+
+        $this->tokenStorageMock->method('getToken')->willReturn($tokenMock);
+
+        // Test when key doesn't start with username
+        $key = "somekey";
+        $expected = "{$username}.{$key}";
+        $this->assertEquals($expected, $this->configManager->concatUsernameWithKey($key));
+
+        // Test when key starts with username
+        $key = "{$username}.otherkey";
+        $this->assertEquals($key, $this->configManager->concatUsernameWithKey($key));
+    }
+
+    public function testGetConfigurationValueWithConcatenatedKey()
+    {
+        $username = 'testuser';
+        $id = 'someconfig';
+        $expectedValue = 'TestValue';
+
+        $tokenMock = $this->createMock(TokenInterface::class);
+        $userMock = $this->createMock(UserInterface::class);
+
+        $userMock->method('getUserIdentifier')->willReturn($username);
+        $tokenMock->method('getUser')->willReturn($userMock);
+
+        $this->tokenStorageMock->method('getToken')->willReturn($tokenMock);
+        $this->repositoryMock->expects($this->once())
+            ->method('getConfigurationValue')
+            ->with("{$username}.{$id}")
+            ->willReturn($expectedValue);
+
+        $result = $this->configManager->getConfigurationValue($id);
+
+        $this->assertEquals($expectedValue, $result);
+    }
+
+    public function testGetConfigurationValueWithoutConcatenatedKey()
+    {
+        $username = 'testuser';
+        $id = 'someconfig';
+        $expectedValue = 'TestValue';
+
+        $tokenMock = $this->createMock(TokenInterface::class);
+        $userMock = $this->createMock(UserInterface::class);
+
+        $userMock->method('getUserIdentifier')->willReturn($username);
+        $tokenMock->method('getUser')->willReturn($userMock);
+
+        $this->tokenStorageMock->method('getToken')->willReturn($tokenMock);
+        $this->repositoryMock->method('getConfigurationValue')
+            ->willReturnOnConsecutiveCalls(null, $expectedValue);
+
+        $result = $this->configManager->getConfigurationValue($id);
+
+        $this->assertEquals($expectedValue, $result);
+    }
+
+    public function testGetConfigurationValueWithTypeCast()
+    {
+        $username = 'testuser';
+        $id = 'someconfig';
+        $originalValue = '2023-01-01';
+        $expectedValue = new \DateTime($originalValue);
+
+        $tokenMock = $this->createMock(TokenInterface::class);
+        $userMock = $this->createMock(UserInterface::class);
+
+        $userMock->method('getUserIdentifier')->willReturn($username);
+        $tokenMock->method('getUser')->willReturn($userMock);
+
+        $this->tokenStorageMock->method('getToken')->willReturn($tokenMock);
+        $this->repositoryMock->expects($this->once())
+            ->method('getConfigurationValue')
+            ->with("{$username}.{$id}")
+            ->willReturn($originalValue);
+
+        $result = $this->configManager->getConfigurationValue($id, 'date');
+
+        $this->assertEquals($expectedValue, $result);
+    }
 }
