@@ -1,5 +1,12 @@
-Easy Config Bundle
-==================
+# Easy Configuration
+
+
+[![Coverage Status](https://coveralls.io/repos/xiidea/EasyConfigBundle/badge.svg?branch=main&service=github)](https://coveralls.io/github/xiidea/EasyConfigBundle?branch=main)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/xiidea/EasyConfigBundle/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/xiidea/EasyConfigBundle/?branch=main)
+[![Latest Stable Version](https://poser.pugx.org/xiidea/easy-config/v/stable.png)](https://packagist.org/packages/xiidea/easy-config)
+[![Total Downloads](https://poser.pugx.org/xiidea/easy-config/downloads.png)](https://packagist.org/packages/xiidea/easy-config)
+[![License](http://poser.pugx.org/xiidea/easy-config/license)](https://packagist.org/packages/xiidea/easy-conifig)
+
 ### A Symfony Bundle for easy configuration management.
 
 ## Features Include
