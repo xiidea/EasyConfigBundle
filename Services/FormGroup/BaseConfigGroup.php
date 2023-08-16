@@ -17,22 +17,27 @@ abstract class BaseConfigGroup implements ConfigGroupInterface
         self::$urlGenerator = $urlGenerator;
     }
 
-    public static function getLabel(): string
+    public function getLabel(): string
     {
         return StringUtil::getLabelFromClass(get_called_class());
     }
 
-    public static function getAuthorSecurityLevels(): ?string
+    public function getNameSpace(): string
+    {
+        return 'app';
+    }
+
+    public function getAuthorSecurityLevels(): ?string
     {
         return null;
     }
 
-    public static function getViewSecurityLevels(): ?string
+    public function getViewSecurityLevels(): ?string
     {
         return null;
     }
 
-    public static function getRouteName(): ?string
+    public function getRouteName(): ?string
     {
         return 'xiidea_easy_config_form';
     }
@@ -42,22 +47,22 @@ abstract class BaseConfigGroup implements ConfigGroupInterface
         return 'name';
     }
 
-    public static function getGroupKey(): ?string
+    public function getGroupKey(): ?string
     {
         return 'miscellaneous';
     }
 
-    public static function getGroupLabel(): ?string
+    public function getGroupLabel(): ?string
     {
         return StringUtil::humanize(static::getGroupKey());
     }
 
-    public static function getGroupIcon(): ?string
+    public function getGroupIcon(): ?string
     {
-        return 'mirror.svg';
+        return null;
     }
 
-    public static function getPriority(): int
+    public function getPriority(): int
     {
         return 0;
     }

@@ -17,20 +17,20 @@ interface ConfigGroupInterface
     /**
      * @return string User friendly string to describe this policies group
      */
-    public static function getLabel(): string;
+    public function getLabel(): string;
 
     /**
      * @return string Base key of policy group
      */
-    public static function getNameSpace(): string;
+    public function getNameSpace(): string;
 
     /**
      * @return string|null role for allowing editing policy
      */
-    public static function getAuthorSecurityLevels(): ?string;
+    public function getAuthorSecurityLevels(): ?string;
 
     /**
      * @return string|null role for viewing policy
      */
-    public static function getViewSecurityLevels(): ?string;
+    public function getViewSecurityLevels(): ?string;
 }

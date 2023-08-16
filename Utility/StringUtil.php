@@ -14,6 +14,7 @@ abstract class StringUtil
         $text = preg_replace('/([A-Z]+)([A-Z][a-z])/', '\\1 \\2', $text);
         $text = preg_replace('/([a-z\d])([A-Z])/', '\\1 \\2', $text);
         $text = preg_replace('~\bdont\b~', 'don\'t', $text);
+        $text = preg_replace('/_/', ' ', $text);;
 
         return mb_strtolower($text, 'UTF-8');
     }

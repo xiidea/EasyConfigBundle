@@ -40,5 +40,8 @@
         "symfony/http-foundation": ">=5.4",
         "doctrine/orm": "^2.4",
         "doctrine/dbal": "^3.2"
+    },
+    "require-dev": {
+        "symfony/test-pack": "^1.1"
     }
 }

@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Xiidea\EasyConfigBundle\Model\BaseConfig;
 use Xiidea\EasyConfigBundle\Services\FormGroup\ConfigGroupInterface;
 use Xiidea\EasyConfigBundle\Services\Repository\ConfigRepositoryInterface;
@@ -21,20 +22,23 @@ class ConfigManager
     private FormFactoryInterface $formFactory;
     private TokenStorageInterface $tokenStorage;
     protected $container;
+    private AuthorizationCheckerInterface $checker;
 
     public function __construct(
         ConfigRepositoryInterface $repository,
         FormFactoryInterface $formFactory,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        AuthorizationCheckerInterface $checker
     ) {
         $this->repository = $repository;
         $this->formFactory = $formFactory;
         $this->tokenStorage = $tokenStorage;
+        $this->checker = $checker;
     }
 
-    public function addConfigGroup($group)
+    public function addConfigGroup(ConfigGroupInterface $group)
     {
-        $this->configurationGroups[$group::getNameSpace()] = $group;
+        $this->configurationGroups[$group->getNameSpace()] = $group;
     }
 
     /**
@@ -59,9 +63,9 @@ class ConfigManager
         foreach ($this->configurationGroups as $groupKey => $policyGroup) {
             $return[] = [
                 'key' => $groupKey,
-                'label' => $policyGroup::getLabel(),
+                'label' => $policyGroup->getLabel(),
                 'form' => $this->createFormView($policyGroup, $groupKey),
-                'isEditable' => true // $this->checker->isGranted($policyGroup::getAuthorSecurityLevels()),
+                'isEditable' => $this->checker->isGranted($policyGroup->getAuthorSecurityLevels()),
             ];
         }
 
@@ -71,7 +75,10 @@ class ConfigManager
     public function getConfigurationsByGroup(string $groupKey): array
     {
         $username = $this->getUsername();
-        $configurations = $this->repository->getConfigurationByUsernameAndGroup($username, $groupKey);
+        $configurations = $this->repository->getConfigurationByUsernameAndGroup(
+            $username,
+            $groupKey
+        );
         $results = [];
 
         /**
@@ -204,13 +211,16 @@ class ConfigManager
 
     public function getConfigurationGroupLabel($group): string
     {
-        return $this->configurationGroups[$group]::getLabel();
+        return $this->configurationGroups[$group]->getLabel();
     }
 
     public function getUserConfigurationValuesByGroupKey($groupKey): array
     {
         $username = $this->getUsername();
-        $configurations = $this->repository->getConfigurationByUsernameAndGroup($username, $groupKey);
+        $configurations = $this->repository->getConfigurationByUsernameAndGroup(
+            $username,
+            $groupKey
+        );
         $values = [];
 
         foreach ($configurations as $configuration) {
@@ -264,7 +274,7 @@ class ConfigManager
             return '';
         }
 
-        return $this->tokenStorage->getToken()->getUser()->getUsername();
+        return $this->tokenStorage->getToken()->getUser()->getUserIdentifier();
     }
 
     protected function typeCast($value, $type)
@@ -306,7 +316,11 @@ class ConfigManager
     public function getFrontendConfigValuesByGroup($group): array
     {
         $items = $this->repository->loadAllByGroup($group, true, true);
-        $userItems = $this->repository->loadAllByGroup($this->concatUsernameWithKey($group), true, true);
+        $userItems = $this->repository->loadAllByGroup(
+            $this->concatUsernameWithKey($group),
+            true,
+            true
+        );
         foreach ($userItems as $key => $item) {
             if ('DEFAULT' === $item) {
                 continue;
