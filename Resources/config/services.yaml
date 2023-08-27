@@ -14,6 +14,7 @@ services:
             - '@xiidea.easy_config.service_repository'
             - '@form.factory'
             - '@security.token_storage'
+            - '@security.authorization_checker'
 
   xiidea.easy_config.controller_api:
           class: Xiidea\EasyConfigBundle\Controller\ConfigApiController
