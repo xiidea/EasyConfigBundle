@@ -2,9 +2,6 @@
 
 namespace Xiidea\EasyConfigBundle\Model;
 
-/**
- *
- */
 class BaseConfig implements BaseConfigInterface
 {
     private $id;
@@ -12,7 +9,7 @@ class BaseConfig implements BaseConfigInterface
     private $value;
 
     private bool $locked = false;
-    
+
     private $type;
 
     private bool $frontend = false;

@@ -9,7 +9,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     const ROOT_NODE_NAME = 'xiidea_easy_config';
-    public function getConfigTreeBuilder()
+
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder(self::ROOT_NODE_NAME);
         $rootNode = $treeBuilder->getRootNode();
