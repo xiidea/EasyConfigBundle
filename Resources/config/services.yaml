@@ -1,5 +1,7 @@
 services:
-
+  _instanceof:
+    Xiidea\EasyConfigBundle\Services\FormGroup\ConfigGroupInterface:
+      tags: [ 'xiidea.easy_config.group' ]
   xiidea.easy_config.service_repository:
           class: Xiidea\EasyConfigBundle\Services\Repository\ConfigRepository
           arguments:
@@ -15,7 +17,7 @@ services:
             - '@form.factory'
             - '@security.token_storage'
             - '@security.authorization_checker'
-
+  Xiidea\EasyConfigBundle\Services\Manager\ConfigManager: '@xiidea.easy_config.service_manager'
   xiidea.easy_config.controller_api:
           class: Xiidea\EasyConfigBundle\Controller\ConfigApiController
           arguments:
