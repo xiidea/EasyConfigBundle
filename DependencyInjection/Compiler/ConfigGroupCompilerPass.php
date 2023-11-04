@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ConfigGroupCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (false === $container->hasDefinition('xiidea.easy_config.service_manager')) {
             return;

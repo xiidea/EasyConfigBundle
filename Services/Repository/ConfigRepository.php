@@ -8,15 +8,11 @@ use Xiidea\EasyConfigBundle\Model\BaseConfig;
 
 class ConfigRepository implements ConfigRepositoryInterface
 {
-    private EntityManagerInterface $em;
-    private $entityClass;
     private $repository;
 
-    public function __construct(EntityManagerInterface $em, $entityClass)
+    public function __construct(private EntityManagerInterface $em, private $entityClass)
     {
-        $this->em = $em;
         $this->isRecognizedEntity($entityClass);
-        $this->entityClass = $entityClass;
         $this->repository = $em->getRepository($entityClass);
     }
 
@@ -27,10 +23,7 @@ class ConfigRepository implements ConfigRepositoryInterface
      */
     private function isRecognizedEntity($entityClass): void
     {
-        $configurationClass = $entityClass;
-        $entityObject = new $configurationClass('');
-
-        if (!$entityObject instanceof BaseConfig) {
+        if (!new $entityClass('') instanceof BaseConfig) {
             throw new UnrecognizedEntityException();
         }
     }
@@ -155,7 +148,7 @@ class ConfigRepository implements ConfigRepositoryInterface
 
         $configuration->setValue($value);
         $configuration->setType($type);
-        $configuration->setLocked((bool)$locked);
+        $configuration->setLocked($locked);
 
         $this->em->persist($configuration);
 

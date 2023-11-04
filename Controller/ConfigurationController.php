@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Xiidea\EasyConfigBundle\Exception\FormValidationException;
 use Xiidea\EasyConfigBundle\Services\Manager\ConfigManager;
 
-class ConfigCrudController extends AbstractController
+class ConfigurationController extends AbstractController
 {
     private ConfigManager $manager;
     private FormFactoryInterface $formFactory;
