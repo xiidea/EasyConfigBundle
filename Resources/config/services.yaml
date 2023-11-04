@@ -24,7 +24,7 @@ services:
             - { name: controller.service_arguments }
 
   xiidea.easy_config.controller_crud:
-          class: Xiidea\EasyConfigBundle\Controller\ConfigCrudController
+          class: Xiidea\EasyConfigBundle\Controller\ConfigurationController
           arguments:
             - '@xiidea.easy_config.service_manager'
             - '@form.factory'

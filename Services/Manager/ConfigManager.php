@@ -14,26 +14,13 @@ use Xiidea\EasyConfigBundle\Services\Repository\ConfigRepositoryInterface;
 
 class ConfigManager
 {
-    /**
-     * @var ConfigGroupInterface[]
-     */
-    private array $configurationGroups = [];
-    private ConfigRepositoryInterface $repository;
-    private FormFactoryInterface $formFactory;
-    private TokenStorageInterface $tokenStorage;
-    protected $container;
-    private AuthorizationCheckerInterface $checker;
-
     public function __construct(
-        ConfigRepositoryInterface $repository,
-        FormFactoryInterface $formFactory,
-        TokenStorageInterface $tokenStorage,
-        AuthorizationCheckerInterface $checker
+        private ConfigRepositoryInterface $repository,
+        private FormFactoryInterface $formFactory,
+        private TokenStorageInterface $tokenStorage,
+        private AuthorizationCheckerInterface $checker,
+        private array $configurationGroups = []
     ) {
-        $this->repository = $repository;
-        $this->formFactory = $formFactory;
-        $this->tokenStorage = $tokenStorage;
-        $this->checker = $checker;
     }
 
     public function addConfigGroup(ConfigGroupInterface $group)
