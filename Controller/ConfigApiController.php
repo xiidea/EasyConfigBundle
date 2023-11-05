@@ -7,28 +7,21 @@ use Xiidea\EasyConfigBundle\Services\Manager\ConfigManager;
 
 class ConfigApiController
 {
-    private ConfigManager $manager;
-
-    public function __construct(ConfigManager $configManager)
+    /**
+     * @param  string  $key
+     * @return JsonResponse
+     */
+    public function getByGroup(string $key, ConfigManager $manager): JsonResponse
     {
-        $this->manager = $configManager;
+        return new JsonResponse($manager->getConfigurationsByGroup($key));
     }
 
     /**
-     * @param string $key
+     * @param  string  $key
      * @return JsonResponse
      */
-    public function getByGroup(string $key): JsonResponse
+    public function getByKey(string $key, ConfigManager $manager): JsonResponse
     {
-        return new JsonResponse($this->manager->getConfigurationsByGroup($key));
-    }
-
-    /**
-     * @param string $key
-     * @return JsonResponse
-     */
-    public function getByKey(string $key): JsonResponse
-    {
-        return new JsonResponse($this->manager->getConfigurationValueByKey($key));
+        return new JsonResponse($manager->getConfigurationValueByKey($key));
     }
 }
