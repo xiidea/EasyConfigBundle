@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
   _instanceof:
     Xiidea\EasyConfigBundle\Services\FormGroup\ConfigGroupInterface:
       tags: [ 'xiidea.easy_config.group' ]
@@ -18,20 +21,11 @@ services:
             - '@security.token_storage'
             - '@security.authorization_checker'
   Xiidea\EasyConfigBundle\Services\Manager\ConfigManager: '@xiidea.easy_config.service_manager'
-  xiidea.easy_config.controller_api:
-          class: Xiidea\EasyConfigBundle\Controller\ConfigApiController
-          arguments:
-            - '@xiidea.easy_config.service_manager'
+
+  Xiidea\EasyConfigBundle\Controller\ConfigApiController:
           tags:
             - { name: controller.service_arguments }
 
-  xiidea.easy_config.controller_crud:
-          class: Xiidea\EasyConfigBundle\Controller\ConfigurationController
-          arguments:
-            - '@xiidea.easy_config.service_manager'
-            - '@form.factory'
+  Xiidea\EasyConfigBundle\Controller\ConfigurationController:
           tags:
             - { name: controller.service_arguments }
-          public: true,
-          calls:
-            - [ setContainer, [ '@service_container' ] ]
