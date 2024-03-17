@@ -131,9 +131,9 @@ class ConfigRepository implements ConfigRepositoryInterface
      * @param $key
      * @param $value
      * @param $type
-     * @param  bool  $locked
-     * @param  bool  $force
-     * @param  bool  $flush
+     * @param bool $locked
+     * @param bool $force
+     * @param bool $flush
      * @return BaseConfig
      */
     public function save($key, $value, $type = null, bool $locked = false, bool $force = false, bool $flush = true)
@@ -142,6 +142,7 @@ class ConfigRepository implements ConfigRepositoryInterface
 
         if (!$configuration) {
             $configuration = new $this->entityClass($key);
+            $configuration->setId($key);
         } elseif ($configuration->isLocked() && !$force) {
             return $configuration;
         }

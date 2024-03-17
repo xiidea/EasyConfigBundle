@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        php-versions: [ '8.0', '8.1', '8.2'] # Add any PHP versions you want to test against
+        php-versions: [ '8.0', '8.1', '8.2', '8.3'] # Add any PHP versions you want to test against
 
     steps:
       - name: Checkout code
