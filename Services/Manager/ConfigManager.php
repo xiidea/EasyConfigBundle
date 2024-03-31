@@ -14,18 +14,23 @@ use Xiidea\EasyConfigBundle\Services\Repository\ConfigRepositoryInterface;
 
 class ConfigManager
 {
+    private array $groups = [];
+
     public function __construct(
         private ConfigRepositoryInterface $repository,
         private FormFactoryInterface $formFactory,
         private TokenStorageInterface $tokenStorage,
         private AuthorizationCheckerInterface $checker,
-        private array $configurationGroups = []
+        $configurationGroups = []
     ) {
+        foreach ($configurationGroups as $group) {
+            $this->groups[$group->getNameSpace()] = $group;
+        }
     }
 
     public function addConfigGroup(ConfigGroupInterface $group)
     {
-        $this->configurationGroups[$group->getNameSpace()] = $group;
+        $this->groups[$group->getNameSpace()] = $group;
     }
 
     /**
@@ -36,7 +41,7 @@ class ConfigManager
         $username = $this->getUsername();
         $groups = [];
 
-        foreach ($this->configurationGroups as $key => $group) {
+        foreach ($this->groups as $key => $group) {
             $groups[str_replace($username.'.', '', $key)] = $group;
         }
 
@@ -47,7 +52,7 @@ class ConfigManager
     {
         $return = [];
 
-        foreach ($this->configurationGroups as $groupKey => $policyGroup) {
+        foreach ($this->groups as $groupKey => $policyGroup) {
             $return[] = [
                 'key' => $groupKey,
                 'label' => $policyGroup->getLabel(),
@@ -123,7 +128,7 @@ class ConfigManager
 
     public function getConfigurationGroup($key): ConfigGroupInterface
     {
-        return $this->configurationGroups[$key];
+        return $this->groups[$key];
     }
 
     private function guessType(FormInterface $item): ?string
@@ -193,12 +198,12 @@ class ConfigManager
             $data = $this->getConfigurationsByGroupKey($group);
         }
 
-        return $this->configurationGroups[$group]->getForm($this->formFactory, $data);
+        return $this->groups[$group]->getForm($this->formFactory, $data);
     }
 
     public function getConfigurationGroupLabel($group): string
     {
-        return $this->configurationGroups[$group]->getLabel();
+        return $this->groups[$group]->getLabel();
     }
 
     public function getUserConfigurationValuesByGroupKey($groupKey): array

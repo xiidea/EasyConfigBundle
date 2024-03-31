@@ -20,6 +20,7 @@ services:
             - '@form.factory'
             - '@security.token_storage'
             - '@security.authorization_checker'
+            - !tagged xiidea.easy_config.group
   Xiidea\EasyConfigBundle\Services\Manager\ConfigManager: '@xiidea.easy_config.service_manager'
 
   Xiidea\EasyConfigBundle\Controller\ConfigApiController:
