@@ -180,4 +180,20 @@ class ConfigRepository implements ConfigRepositoryInterface
 
         return $configuration->getValue();
     }
+
+    public function getGlobalAndUserConfigurationByKey(string $username, string $key)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        return $qb
+            ->setCacheable(true)
+            ->setCacheRegion('config_key')
+            ->where('c.id=:username')
+            ->setParameter('username', $username.'.'.$key)
+            ->orWhere('c.id=:key')
+            ->setParameter('key', $key)
+            ->orderBy('c.isGlobal', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

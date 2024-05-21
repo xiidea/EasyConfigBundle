@@ -19,4 +19,6 @@ interface ConfigRepositoryInterface
     public function removeByKey($key);
 
     public function getConfigurationValue($key);
+
+    public function getGlobalAndUserConfigurationByKey(string $username, string $key);
 }
