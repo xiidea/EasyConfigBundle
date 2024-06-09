@@ -17,18 +17,18 @@ class ConfigManager
     private array $groups = [];
 
     public function __construct(
-        private ConfigRepositoryInterface     $repository,
-        private FormFactoryInterface          $formFactory,
-        private TokenStorageInterface         $tokenStorage,
+        private ConfigRepositoryInterface $repository,
+        private FormFactoryInterface $formFactory,
+        private TokenStorageInterface $tokenStorage,
         private AuthorizationCheckerInterface $checker,
-                                              $configurationGroups = [])
-    {
+        $configurationGroups = []
+    ) {
         foreach ($configurationGroups as $group) {
             $this->groups[$group->getNameSpace()] = $group;
         }
     }
 
-    public function addConfigGroup(ConfigGroupInterface $group)
+    public function addConfigGroup(ConfigGroupInterface $group): void
     {
         $this->groups[$group->getNameSpace()] = $group;
     }
@@ -42,7 +42,7 @@ class ConfigManager
         $groups = [];
 
         foreach ($this->groups as $key => $group) {
-            $groups[str_replace($username . '.', '', $key)] = $group;
+            $groups[str_replace($username.'.', '', $key)] = $group;
         }
 
         return $groups;
@@ -77,8 +77,8 @@ class ConfigManager
          * @var BaseConfig $configuration
          */
         foreach ($configurations as $configuration) {
-            $key = str_replace($username . '.', '', $configuration->getId());
-            $key = str_replace($groupKey . '.', '', $key);
+            $key = str_replace($username.'.', '', $configuration->getId());
+            $key = str_replace($groupKey.'.', '', $key);
 
             if (str_contains($configuration->getId(), $username)) {
                 $results[$key] = $configuration->getValue();
@@ -102,7 +102,7 @@ class ConfigManager
         foreach ($configurations as $configuration) {
             $value = $configuration->getValue();
 
-            if (str_contains($configuration->getId(), $username . $key)) {
+            if (str_contains($configuration->getId(), $username.$key)) {
                 break;
             }
         }
@@ -176,12 +176,12 @@ class ConfigManager
         $formData = $form->getData();
 
         foreach ($formData as $k => $val) {
-            $checkBoxKey = $k . 'Preference';
+            $checkBoxKey = $k.'Preference';
 
             if (array_key_exists($checkBoxKey, $formData)) {
                 if ($formData[$checkBoxKey]) {
                     unset($formData[$k]);
-                    $this->repository->removeByKey($key . '.' . $k);
+                    $this->repository->removeByKey($key.'.'.$k);
                 }
 
                 unset($types[$checkBoxKey]);
@@ -221,10 +221,10 @@ class ConfigManager
 
             if (str_contains($configuration->getId(), $username)) {
                 $values[$key] = $configuration->getValue();
-                $values[$key . 'Preference'] = false;
+                $values[$key.'Preference'] = false;
             } elseif (!array_key_exists($key, $values)) {
                 $values[$key] = $configuration->getValue();
-                $values[$key . 'Preference'] = true;
+                $values[$key.'Preference'] = true;
             }
         }
 
@@ -248,7 +248,7 @@ class ConfigManager
         $key = str_replace("{$username}.", '', $key);
 
         if (!$isGlobal) {
-            $key = $username . '.' . $key;
+            $key = $username.'.'.$key;
         }
 
         $result = $this->repository->getConfigurationValue($key);
@@ -275,19 +275,13 @@ class ConfigManager
             return null;
         }
 
-        switch ($type) {
-            case Types::DATE_MUTABLE:
-            case Types::DATETIME_MUTABLE:
-                return new \DateTime($value);
-            case Types::BOOLEAN:
-                return (bool)$value;
-            case Types::INTEGER:
-                return (int)$value;
-            case Types::JSON:
-                return json_decode($value);
-            default:
-                return $value;
-        }
+        return match ($type) {
+            Types::DATE_MUTABLE, Types::DATETIME_MUTABLE => new \DateTime($value),
+            Types::BOOLEAN => (bool)$value,
+            Types::INTEGER => (int)$value,
+            Types::JSON => json_decode($value),
+            default => $value,
+        };
     }
 
     public function getConfigurationValue($id, $type = null)
@@ -326,5 +320,38 @@ class ConfigManager
     public function getGlobalAndUserConfigurationByKey(string $key): ?array
     {
         return $this->repository->getGlobalAndUserConfigurationByKey($this->getUsername(), $key);
+    }
+
+    public function getRepository(): ConfigRepositoryInterface
+    {
+        return $this->repository;
+    }
+
+    public function getConfigurationJson($id, $default = [])
+    {
+        $data = $this->repository->find($id);
+
+        $data = json_decode($data->getValue(), true);
+
+        if (json_last_error()) {
+            return $default;
+        }
+
+        return array_merge_recursive($default, $data);
+    }
+
+    public function saveConfigurationJson($id, array $data)
+    {
+        if (empty($data)) {
+            return null;
+        }
+
+        $data = json_encode($data);
+
+        if (json_last_error()) {
+            return null;
+        }
+
+        return $this->repository->save($id, $data, 'json');
     }
 }

@@ -5,6 +5,7 @@ namespace Xiidea\EasyConfigBundle\Services\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Xiidea\EasyConfigBundle\Exception\UnrecognizedEntityException;
 use Xiidea\EasyConfigBundle\Model\BaseConfig;
+use Xiidea\EasyConfigBundle\Model\BaseConfigInterface;
 
 class ConfigRepository implements ConfigRepositoryInterface
 {
