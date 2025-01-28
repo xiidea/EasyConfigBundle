@@ -32,12 +32,12 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.0",
-        "symfony/framework-bundle": ">=5.0 <7.0.0",
-        "symfony/security-bundle": ">=5.0 <7.0.0",
-        "symfony/security-core": ">=5.0 <7.0.0",
-        "symfony/twig-bundle": ">=5.0 <7.0.0",
-        "symfony/form": ">=5.0 <7.0.0",
-        "symfony/http-foundation": ">=5.0 <7.0.0",
+        "symfony/framework-bundle": ">=5.0 <=7.4.0",
+        "symfony/security-bundle": ">=5.0 <=7.4.0",
+        "symfony/security-core": ">=5.0 <=7.4.0",
+        "symfony/twig-bundle": ">=5.0 <=7.4.0",
+        "symfony/form": ">=5.0 <=7.4.0",
+        "symfony/http-foundation": ">=5.0 <=7.4.0",
         "doctrine/orm": "^2.4|^3.0",
         "doctrine/dbal": "^3.2|^4.0"
     },
